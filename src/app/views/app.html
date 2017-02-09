@@ -1,0 +1,10 @@
+<p>
+    <div ng-repeat="dat in appVm.data | limitTo:25">
+        <div class="photoPanel">
+            <div class="photoId">Photo Id: {{dat.id}}</div>
+            <div class="photoThumbnail">
+                   <img ng-src="{{dat.thumbnailUrl}}" ng-click="appVm.openModal(dat.id,dat.title,dat.thumbnailUrl)">
+            </div>
+        </div>
+    </div>
+</p>
