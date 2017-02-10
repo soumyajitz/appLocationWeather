@@ -1,8 +1,11 @@
 describe('app controller functionalities', function() {
   var ctrl;
   var scope;
-  var appService;
-  var data = {
+  var mockAppService;
+  var $q;
+  var $httpBackend;
+
+  var appData = {
       photo1: {
         albumId: 1,
         id: 1,
@@ -23,12 +26,33 @@ describe('app controller functionalities', function() {
         angular.mock.module("api-app"); 
     });
 
-  beforeEach(inject(function(_$controller_,$rootScope) {
+  beforeEach(inject(function(_$controller_,$rootScope, _$q_, _$httpBackend_) {
       scope = $rootScope.$new();
-      ctrl = _$controller_('appController',{$scope: scope});
+      $q = _$q_;
+      $httpBackend = _$httpBackend_;
+      var def = $q.defer();
+      
+      mockAppService = {
+            getAllPhotos: function () {}
+        };
+    
+      sinon.stub(mockAppService, 'getAllPhotos').returns(def.promise);
+      def.resolve({data:[appData]});
+
+     ctrl = _$controller_('appController',{
+        $scope: scope,
+        appService: mockAppService
+     });
+     
+    $httpBackend.whenGET('https://jsonplaceholder.typicode.com/photos').respond(200, '');
   }));
 
-    it('app controller is defined', function(){
+    it('app controller is defined', function() {
         expect(ctrl).to.not.be.undefined;
     });
+
+    it('calls service function from http call', function() {
+        scope.$apply();
+        expect(mockAppService.getAllPhotos).to.have.been.called;
+    })
 });
