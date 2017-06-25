@@ -5,9 +5,6 @@
 </div>
 
 <div ng-hide="appVm.flag">
-        <div ng-hide="appVm">
-            <p> Loading Weather Data</p>
-        </div>
         <div ng-show="appVm.nav">
             <p><h3>Weather of the current city: {{appVm.currentData.name}} is {{appVm.currentData.main.temp}}˚F and its co-ordinates are: {{appVm.currentData.coord.lat}},{{appVm.currentData.coord.lon}}</h3></p>
         </div>
@@ -19,6 +16,12 @@
         <div class="form-group">
         <label for="weatherText">Enter Weather</label>
         <input type="text" ng-model="city" class="form-control" id="weatherText" placeholder="Enter Cityname, for example: Chicago">
+        <div ng-if="appVm.err" class="city_not_found">
+            City not found
+        </div>
+        <div ng-if="appVm.emptyCity" class="city_not_found">
+            Please Enter a City Name
+        </div>
     </div>
 </div>
      <div class="panel-footer">

@@ -11,6 +11,8 @@
 
         appVm.getCityWeather = getCityWeather;
         appVm.flag = false;
+        appVm.err = false;
+        appVm.emptyCity = false;
 
         init();
 
@@ -51,10 +53,13 @@
                 appService.getCurrentWeather($scope.city)
                     .then(function(data){
                         appVm.flag = true;
+                        appVm.err = false;
+                        appVm.emptyCity = false;
                         appVm.currentData = data;
                     })
                     .catch(function (error) {
                         appVm.flag = false;
+                        appVm.err = true;
                         console.log(error);
                     })
 
@@ -66,9 +71,12 @@
                     })
                     .catch(function (error) {
                         appVm.flag = false;
+                        appVm.err = true;
                         console.log(error);
                     })
-            } 
+            } else {
+                appVm.emptyCity = true;
+            }
         } 
     }
 })();
