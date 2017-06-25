@@ -1,58 +1,29 @@
-// describe('app controller functionalities', function() {
-//   var ctrl;
-//   var scope;
-//   var mockAppService;
-//   var $q;
-//   var $httpBackend;
+describe('app controller functionalities', function() {
+  var appController;
+  var scope;
 
-//   var appData = {
-//       photo1: {
-//         albumId: 1,
-//         id: 1,
-//         title: "photo1",
-//         url: "http://placehold.it/600/92c952",
-//         thumbnailUrl: "http://placehold.it/150/30ac17"
-//       },
-//       photo2:{
-//         albumId: 1,
-//         id: 2,
-//         title: "photo2",
-//         url: "http://placehold.it/600/771796",
-//         thumbnailUrl: "http://placehold.it/150/dff9f6"
-//       }
-//   };
+    beforeEach(function () {
+            angular.mock.module("api-app"); 
+        });
 
-//    beforeEach(function () {
-//         angular.mock.module("api-app"); 
-//     });
+    beforeEach(inject(function(_$controller_,$rootScope) {
+        scope = $rootScope.$new();
 
-//   beforeEach(inject(function(_$controller_,$rootScope, _$q_, _$httpBackend_) {
-//       scope = $rootScope.$new();
-//       $q = _$q_;
-//       $httpBackend = _$httpBackend_;
-//       var def = $q.defer();
-      
-//       mockAppService = {
-//             getAllPhotos: function () {}
-//         };
-    
-//       sinon.stub(mockAppService, 'getAllPhotos').returns(def.promise);
-//       def.resolve({data:[appData]});
+        appController = _$controller_('appController',{
+            $scope: scope,
+        });
+        
+    }));
 
-//      ctrl = _$controller_('appController',{
-//         $scope: scope,
-//         appService: mockAppService
-//      });
-     
-//     $httpBackend.whenGET('https://jsonplaceholder.typicode.com/photos').respond(200, '');
-//   }));
+    it('app controller should exist', function() {
+        expect(appController).to.exist;
+    });
 
-//     it('app controller is defined', function() {
-//         expect(ctrl).to.not.be.undefined;
-//     });
+    it('calls init() at first', function() {
+        expect(appController.init()).to.have.been.called;
+    });
 
-//     it('calls service function from http call', function() {
-//         scope.$apply();
-//         expect(mockAppService.getAllPhotos).to.have.been.called;
-//     })
-// });
+    it('calls getCityWeather() function', function() {
+        expect(appController.getCityWeather()).to.have.been.called;
+    });
+});

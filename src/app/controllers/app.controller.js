@@ -8,13 +8,13 @@
     appController.$inject = ['appService','$scope'];
     function appController(appService, $scope){
         var appVm = this;
-
-        appVm.getCityWeather = getCityWeather;
         appVm.flag = false;
         appVm.err = false;
         appVm.emptyCity = false;
+        appVm.init = init;
+        appVm.getCityWeather = getCityWeather;
 
-        init();
+        appVm.init();
 
         function init() {
             if (navigator.geolocation) {
