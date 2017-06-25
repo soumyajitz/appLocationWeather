@@ -1,13 +1,12 @@
 {
-  "name": "photos",
+  "name": "WeatherApp",
   "version": "1.0.0",
-  "description": "api photos app",
-  "main": "index.js",
+  "description": "Weather app",
   "engines": {
     "node": "6.6.0"
   },
   "scripts": {
-    "start": "npm install; bower install; gulp serve",
+    "start": "rm -rf src/styles/style.js; npm install; bower install; gulp serve",
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
   },
   "author": "Soumyajit Sarkar",
@@ -17,6 +16,7 @@
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
+    "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
     "gulp-filter": "^4.0.0",
     "gulp-inject": "^4.1.0",

@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    clean = require('gulp-clean'),
     inject = require('gulp-inject'),
     bowerfiles = require('main-bower-files'),
     angularFileSort = require('gulp-angular-filesort'),
@@ -14,6 +15,11 @@ var config = {
     }
 };
 
+gulp.task('clean', function(){
+    return gulp.src(config.paths.build, {read: false})
+        .pipe(clean());
+});
+
 gulp.task('inject', function () {
 
     var cssFiles = gulp.src([
@@ -21,8 +27,9 @@ gulp.task('inject', function () {
     ], {read: false});
 
     var jsFiles = gulp.src([
+        config.paths.src + '!/**/*.spec.js',
         config.paths.src + '/**/*.js'
-    ]);
+        ]);
 
     return gulp.src(config.paths.src + '/index.html')
         .pipe(inject(gulp.src(bowerfiles(),{read: false}),{name: 'bower'}))
@@ -40,6 +47,7 @@ gulp.task('serve', ['inject'], function () {
             }
         },
         files: [
+            config.paths.src + '!/**/*.spec.js',
             config.paths.src + '/**'
         ]
     });

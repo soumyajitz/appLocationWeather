@@ -1,10 +1,60 @@
-<p>
-    <div ng-repeat="dat in appVm.data | limitTo:25">
-        <div class="photoPanel">
-            <div class="photoId">Photo Id: {{dat.id}}</div>
-            <div class="photoThumbnail">
-                   <img ng-src="{{dat.thumbnailUrl}}" ng-click="appVm.openModal(dat.id,dat.title,dat.thumbnailUrl)">
-            </div>
+<div ng-hide="appVm.flag">
+        <div ng-show="appVm.zip">
+            <p><h3>Weather of Zipcode:60661 is {{appVm.currentData.main.temp}}˚F and its co-ordinates are: {{appVm.currentData.coord.lat}},{{appVm.currentData.coord.lon}}</h3></p>
         </div>
+</div>
+
+<div ng-hide="appVm.flag">
+        <div ng-hide="appVm">
+            <p> Loading Weather Data</p>
+        </div>
+        <div ng-show="appVm.nav">
+            <p><h3>Weather of the current city: {{appVm.currentData.name}} is {{appVm.currentData.main.temp}}˚F and its co-ordinates are: {{appVm.currentData.coord.lat}},{{appVm.currentData.coord.lon}}</h3></p>
+        </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3>Weather App</h3></div>
+    <div class="panel-body">
+        <div class="form-group">
+        <label for="weatherText">Enter Weather</label>
+        <input type="text" ng-model="city" class="form-control" id="weatherText" placeholder="Enter Cityname, for example: Chicago">
     </div>
-</p>
+</div>
+     <div class="panel-footer">
+         <a ng-href="#/app" target="_self" class="btn btn-primary" ng-click="appVm.getCityWeather()">Search Weather</a>
+          <a class="btn btn-default" href="#">See Default Weather</a>
+     </div>
+</div>
+
+<div ng-show="appVm.flag">
+    <hr>
+        <div>
+            <p><h3>Current Weather of {{city}} is {{appVm.currentData.main.temp}}˚F and its co-ordinates are: {{appVm.city.coord.lat}},{{appVm.city.coord.lon}}</h3></p>
+        </div>
+    <hr>
+
+    <div>
+        <p><h2>Table below shows the weather of {{city}} for the next 5 days</h2></p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Maximum Temperature</th>
+                    <th>Minimum Temperature</th>
+                    <th>Humidity</th>
+                    <th>Weather Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="dat in appVm.data" ng-if="($index+1) % 7 === 0"> 
+                    <td> {{ dat.dt_txt | fmtDate }} </td>
+                    <td> {{ dat.main.temp_max}}˚ F </td>
+                    <td> {{ dat.main.temp_min}}˚ F </td>
+                    <td> {{ dat.main.humidity }} </td>
+                    <td> {{ dat.weather[0].description}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
