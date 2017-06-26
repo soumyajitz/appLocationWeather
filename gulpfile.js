@@ -27,7 +27,6 @@ gulp.task('inject', function () {
     ], {read: false});
 
     var jsFiles = gulp.src([
-        config.paths.src + '!/**/*.spec.js',
         config.paths.src + '/**/*.js'
         ]);
 
